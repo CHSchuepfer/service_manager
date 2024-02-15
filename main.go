@@ -1,10 +1,10 @@
 package main
 
 import (
-	"./util"
 	"fmt" // Package to format strings
 	"github.com/gin-gonic/gin"
 	_ "github.com/mattn/go-sqlite3"
+	"service_manager/util"
 )
 
 func checkAuth(routerContext *gin.Context) {
