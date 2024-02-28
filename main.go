@@ -4,7 +4,7 @@ import (
 	"fmt" // Package to format strings
 	"github.com/gin-gonic/gin"
 	_ "github.com/mattn/go-sqlite3"
-	"service_manager/util"
+	"service_manager/init"
 )
 
 func checkAuth(routerContext *gin.Context) {
@@ -19,12 +19,15 @@ func checkAuth(routerContext *gin.Context) {
 
 func main() {
 	fmt.Println("Service Manager startup initiated...")
-	initer, err := util.Initialization("config.yaml")
+	// Replace _ with actual config Object
+	_, err := initialisation.Initialization("config.yaml")
+
 	if err != nil {
 		fmt.Println(err)
 		panic(err)
+	} else {
+		fmt.Println("Initialisation successful")
 	}
-	fmt.Println(initer)
 	router := gin.Default()
 
 	// Startup gin Rest Server
