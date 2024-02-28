@@ -1,0 +1,6 @@
+ServerPort: 
+  "8080"
+DBName:
+  "service_manager"
+Salt:
+  "changeme"

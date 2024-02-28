@@ -5,7 +5,11 @@ import (
 	"fmt"
 )
 
-func InitRuntime() {
+func genSecrets() {
+	fmt.Println("in genSecrets")
+}
+
+func InitDB() {
 	// Initialize the initRuntime
 	sqliteDB, err := sql.Open("sqlite3", "./authager.db")
 	if err != nil {

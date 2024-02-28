@@ -18,8 +18,13 @@ func checkAuth(routerContext *gin.Context) {
 }
 
 func main() {
-	fmt.Println("Service Manin CheckAuthager startup initiated...")
-	util.InitRuntime()
+	fmt.Println("Service Manager startup initiated...")
+	initer, err := util.Initialization("config.yaml")
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	fmt.Println(initer)
 	router := gin.Default()
 
 	// Startup gin Rest Server
