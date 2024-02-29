@@ -3,27 +3,25 @@ package initialisation
 import (
 	"fmt"
 	"os"
-	conf "service_manager/init/config"
-	crypt "service_manager/init/crypt"
-	db "service_manager/init/db"
 )
 
 func Initialization(filename string) (configState []string, ConfigError error) {
-	config := conf.CheckConfigExists(filename)
+	config := CheckConfigExists(filename)
 	if config {
 		fmt.Println("Config File found")
-		serverConf, readconferr := conf.GetConfig(filename)
+		serverConf, readconferr := GetConfig(filename)
 		if readconferr != nil {
 			fmt.Println(readconferr)
 			panic(readconferr)
 		}
-		salt, saltErr := crypt.GetSalt(serverConf.Salt, filename)
+		salt, saltErr := GetSalt(serverConf.Salt, filename)
 		if saltErr != nil {
 			fmt.Println(saltErr)
 			panic(saltErr)
 		}
+		//Build the DB file name
 		DbFileName := fmt.Sprintf("%s.db", serverConf.DBName)
-		dbState, createError := db.CheckDbExists(DbFileName, salt)
+		dbState, createError := CheckDbExists(DbFileName, salt)
 		if createError != nil {
 			panic(createError)
 		}
