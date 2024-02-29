@@ -12,13 +12,18 @@ type Config struct {
 	Salt       string `yaml:"Salt"`
 }
 
-func CheckConfigExists(filename string) bool {
+func CheckConfigExists(filename string) Config {
 	fmt.Println("Checking if basic config files exist")
 	_, fileError := os.Stat(filename)
 	if fileError != nil {
-		return false
+		panic(fileError)
 	} else {
-		return true
+		serverConf, readconferr := GetConfig(filename)
+		if readconferr != nil {
+			fmt.Println(readconferr)
+			panic(readconferr)
+		}
+		return serverConf
 	}
 }
 

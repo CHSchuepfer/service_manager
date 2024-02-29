@@ -10,7 +10,7 @@ import (
 func writeSalt(filename string, salt []byte) {
 	fmt.Println("Writing Salt to config")
 	saltString := base64.StdEncoding.EncodeToString(salt)
-	var conf config
+	var conf Config
 	configFile, _ := os.Open(filename)
 	decodedconf := yaml.NewDecoder(configFile)
 	if err := decodedconf.Decode(&conf); err != nil {

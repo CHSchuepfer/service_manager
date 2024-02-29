@@ -20,12 +20,22 @@ func createDb(dbName string) (status string, createErr error) {
 	fmt.Println("Database Created")
 	return status, createErr
 }
-
+func createUserData(db *sql.DB, salt []byte) {
+	userconf, dbCreateErr := db.Exec(`  
+    INSERT INTO sessions 
+    (username, passwords) 
+    VALUES ('admin', 'admin')
+    `)
+	if dbCreateErr != nil {
+		panic(dbCreateErr)
+	}
+	fmt.Println(userconf)
+}
 func checkUserData(db *sql.DB, salt []byte) (status bool) {
-	fmt.Println("Checking for User Data")
 	_, checkErr := db.Exec(`SELECT EXISTS (SELECT 1 FROM sessions WHERE username='admin')`)
+	fmt.Println("Checking for User Data")
 	if checkErr != nil {
-		panic(checkErr)
+
 	} else {
 		fmt.Println("User Data found")
 		status = true
@@ -46,6 +56,7 @@ func createSessionTable(db *sql.DB, salt []byte) (status bool) {
 		panic(dbCreateErr)
 	} else {
 		fmt.Println("Table Created")
+		fmt.Println(tableCreateResult)
 	}
 	checkuser := checkUserData(db, salt)
 	if checkuser {
@@ -79,7 +90,9 @@ func CheckDbExists(dbName string, salt []byte) (status string, error error) {
 	if err != nil {
 		fmt.Println(err)
 		tableStaus := createSessionTable(db, salt)
-
+		if !tableStaus {
+			fmt.Println("Error creating session table")
+		}
 	} else {
 		fmt.Println("Session Table found")
 	}
