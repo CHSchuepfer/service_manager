@@ -35,7 +35,7 @@ func GetConfig(filename string) (confContent Config, confError error) {
 		panic(err)
 	}
 	if runtimeConf.ServerPort == "" {
-		confError = fmt.Errorf("ERROR: NO ServerPort configured, please check your configuration %s", filename)
+		confError = fmt.Errorf("ERROR: NO ServerPort configured, please check your configuration '%s'", filename)
 		panic(confError)
 	}
 	return runtimeConf, confError
